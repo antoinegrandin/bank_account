@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BankAccount</string>
+
+    <string name="hint_what_is_your_id">Last Name</string>
+    <string name="label_id_bank_account">What is your last name ?</string>
+    <string name="label_button_validation_id">Log In</string>
+    <string name="label_textView_login_message">Welcome to your Bank Account App !</string>
+
+    <string name="label_textView_account_message">Welcome to your List of Account !</string>
+
+</resources>
