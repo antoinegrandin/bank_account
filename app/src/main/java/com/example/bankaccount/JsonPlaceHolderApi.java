@@ -8,5 +8,5 @@ import retrofit2.http.GET;
 public interface JsonPlaceHolderApi {
 
     @GET("labbbank/accounts")
-    Call<List<Post>> getPosts();
+    Call<List<Account>> getAccounts();
 }

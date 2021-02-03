@@ -16,46 +16,53 @@ class AccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bankaccount)
 
-        var textViewResult: TextView = findViewById(R.id.text_view_result);
+        val db = DataBaseHandler(this)
+
+        val textViewResult: TextView = findViewById(R.id.text_view_result)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://60102f166c21e10017050128.mockapi.io/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+                .baseUrl("https://60102f166c21e10017050128.mockapi.io/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
 
-        val jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java);
+        val jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
 
-        val call: Call<List<Post>> = jsonPlaceHolderApi.posts;
+        val call: Call<List<Account>> = jsonPlaceHolderApi.accounts
 
-        call.enqueue(object : Callback<List<Post>> {
-            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+        call.enqueue(object : Callback<List<Account>> {
+            override fun onResponse(call: Call<List<Account>>, response: Response<List<Account>>) {
                 if (!response.isSuccessful) {
-                    textViewResult.text = "Code : " + response.code();
-                    return;
+                    val errorMessage = "Code : $response.code()"
+                    textViewResult.text = errorMessage
+                    return
                 }
 
-                val posts: List<Post> = response.body() as List<Post>;
+                db.cleanData()
 
-                for (post in posts) {
+                val accounts: List<Account> = response.body() as List<Account>
+
+                for (account in accounts) {
+                    db.insertData(account)
+
                     var content = ""
                     content += """
-                        ID: ${post.id}
+                        ID: ${account.id}
                         
                         """.trimIndent()
                     content += """
-                        Account Name: ${post.accountName}
+                        Account Name: ${account.accountName}
                         
                         """.trimIndent()
                     content += """
-                        Amount: ${post.amount}
+                        Amount: ${account.amount}
                         
                         """.trimIndent()
                     content += """
-                        Iban: ${post.iban}
+                        Iban: ${account.iban}
                         
                         """.trimIndent()
                     content += """
-                        Currency: ${post.currency}
+                        Currency: ${account.currency}
                         
                         
                         """.trimIndent()
@@ -63,9 +70,38 @@ class AccountActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<List<Post>>, throwable: Throwable) {
-                textViewResult.text = throwable.toString();
+            override fun onFailure(call: Call<List<Account>>, throwable: Throwable) {
+                val accounts: List<Account> = db.readData()
+                val connectionErrorMessage = "No Connection...Display of the latest available data : \n\n"
+                textViewResult.text = connectionErrorMessage
+                for (account in accounts) {
+                    var content = ""
+                    content += """
+                        ID: ${account.id}
+                        
+                        """.trimIndent()
+                    content += """
+                        Account Name: ${account.accountName}
+                        
+                        """.trimIndent()
+                    content += """
+                        Amount: ${account.amount}
+                        
+                        """.trimIndent()
+                    content += """
+                        Iban: ${account.iban}
+                        
+                        """.trimIndent()
+                    content += """
+                        Currency: ${account.currency}
+                        
+                        
+                        """.trimIndent()
+                    textViewResult.append(content)
+                }
             }
         })
+
+
     }
 }
