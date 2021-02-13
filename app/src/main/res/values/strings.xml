@@ -10,4 +10,8 @@
 
     <string name="label_textView_account_message">Welcome to your List of Account !</string>
 
+    <string name="label_textView_about_message">Welcome to your Bank Account App - About Section !</string>
+    <string name="label_author">Developer : Antoine Grandin</string>
+    <string name="label_author_class">Class : IOS2 - ESILV</string>
+    <string name="label_version">Version : 0.4</string>
 </resources>
