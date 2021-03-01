@@ -2,25 +2,36 @@ package com.example.bankaccount
 
 import android.app.KeyguardManager
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.biometrics.BiometricPrompt
-import android.media.Image
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CancellationSignal
+import android.util.Base64
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
+import java.security.SecureRandom
+import java.security.spec.KeySpec
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
+
 
 class MainActivity : AppCompatActivity() {
 
-    private val clientName = "Hills";
+    val SHARED_PREFS = "sharedPrefs"
+    val PASSWORD = "password"
+    val SALT = "salt"
+    val ALREADY_CONNECT = "already_connect"
+
+    private var password: String? = null
+    private var salt: String? = null
+    private var already_connect = false
 
     private var cancellationSignal: CancellationSignal? = null
     private val authenticationCallback: BiometricPrompt.AuthenticationCallback
@@ -29,7 +40,11 @@ class MainActivity : AppCompatActivity() {
         object: BiometricPrompt.AuthenticationCallback(){
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                notifyUser("Authentication error: $errString")
+                if(errorCode == 10){
+                    notifyUser("Authentication cancelled")
+                } else {
+                    notifyUser("Authentication error: $errString")
+                }
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -48,14 +63,15 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val lastNameTextView: TextView = findViewById(R.id.textView_lastName)
-
+        val passwordTextView: TextView = findViewById(R.id.textView_password)
+        
         findViewById<Button>(R.id.button_validation_id).setOnClickListener{
-            if(lastNameTextView.text.toString()==clientName){
-                val accountIntent = Intent(this, AccountActivity::class.java);
-                startActivity(accountIntent);
+            loadData()
+            if(passwordTextView.text.toString()==password){
+                val accountIntent = Intent(this, AccountActivity::class.java)
+                startActivity(accountIntent)
             } else {
-                Toast.makeText(this, "Wrong Name", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Wrong Password", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -68,7 +84,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCancellationSignal(): android.os.CancellationSignal {
+    fun loadData() {
+        val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        password = sharedPreferences.getString(PASSWORD, "0000")
+        salt = sharedPreferences.getString(SALT, "")
+        already_connect = sharedPreferences.getBoolean(ALREADY_CONNECT, false)
+    }
+
+    private fun getCancellationSignal(): CancellationSignal {
         cancellationSignal = CancellationSignal()
         cancellationSignal?.setOnCancelListener {
             notifyUser("Authentication was cancelled by the user")
@@ -97,10 +120,10 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.P)
     private fun startFingerprintPrompt(){
-        val biometricPrompt: android.hardware.biometrics.BiometricPrompt = android.hardware.biometrics.BiometricPrompt.Builder(this)
+        val biometricPrompt: BiometricPrompt = BiometricPrompt.Builder(this)
             .setTitle("Authentication is required")
             .setSubtitle("This app uses fingerprint to keep your data secure")
-            .setNegativeButton("Cancel", this.mainExecutor, DialogInterface.OnClickListener{_, _ ->
+            .setNegativeButton("Cancel", this.mainExecutor, { _, _ ->
                 notifyUser("Authentication cancelled")
             }).build()
 

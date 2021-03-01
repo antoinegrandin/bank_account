@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BankAccount</string>
 
-    <string name="hint_what_is_your_id">Last Name</string>
-    <string name="label_id_bank_account">What is your last name ?</string>
+    <string name="hint_what_is_your_id">Password</string>
+    <string name="label_id_bank_account">What is your password ?</string>
     <string name="label_button_validation_id">Log In</string>
     <string name="label_button_authenticate">AUTHENTICATE</string>
     <string name="label_authenticate_or">or</string>
