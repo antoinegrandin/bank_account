@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         val passwordTextView: TextView = findViewById(R.id.textView_password)
-        
+
         findViewById<Button>(R.id.button_validation_id).setOnClickListener{
             loadData()
             if(passwordTextView.text.toString()==password){
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun loadData() {
+    private fun loadData() {
         val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         password = sharedPreferences.getString(PASSWORD, "0000")
         salt = sharedPreferences.getString(SALT, "")
