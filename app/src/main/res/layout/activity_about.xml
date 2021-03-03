@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-tools:context=".MainActivity"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:padding="50dp" >
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".AboutActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="50dp">
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/homepage_image"
         android:layout_width="200dp"

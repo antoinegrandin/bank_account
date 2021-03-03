@@ -38,7 +38,7 @@ class AccountActivity : AppCompatActivity() {
         val textViewResult: TextView = findViewById(R.id.text_view_result)
 
         val retrofit = Retrofit.Builder()
-                .baseUrl("https://60102f166c21e10017050128.mockapi.io/")
+                .baseUrl("https://60102f166c21e10017050128.mockapi.io/labbbank/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 

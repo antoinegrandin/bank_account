@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">BankAccount</string>
 
-    <string name="hint_what_is_your_id">Password</string>
+    <string name="hint_what_is_your_password">Password</string>
     <string name="label_id_bank_account">What is your password ?</string>
     <string name="label_button_validation_id">Log In</string>
-    <string name="label_button_authenticate">AUTHENTICATE</string>
     <string name="label_authenticate_or">or</string>
     <string name="label_textView_login_message">Welcome to your Bank Account App !</string>
 
@@ -14,4 +13,10 @@
     <string name="label_author">Developer : Antoine Grandin</string>
     <string name="label_author_class">Class : IOS2 - ESILV</string>
     <string name="label_version">Version : 0.4</string>
+    <string name="title_about">About</string>
+
+    <string name="label_textView_pin_change_message">Welcome to your Bank Account App - Please change your password :</string>
+    <string name="label_new_password">Enter your new password :</string>
+    <string name="label_new_password_confirmation">Please re-enter your password :</string>
+    <string name="label_button_change_password">Confirmation</string>
 </resources>

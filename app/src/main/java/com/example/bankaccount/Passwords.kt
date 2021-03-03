@@ -7,7 +7,6 @@ import java.util.*
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 
-
 class Passwords {
 
     private val RANDOM: Random = SecureRandom()
@@ -17,14 +16,16 @@ class Passwords {
     /**
      * static utility class
      */
-    private fun Passwords() {}
+    fun Passwords() {
+        TODO("Use this class for API hidden")
+    }
 
     /**
      * Returns a random salt to be used to hash a password.
      *
      * @return a 16 bytes random salt
      */
-    val nextSalt: ByteArray?
+    val nextSalt: ByteArray
         get() {
             val salt = ByteArray(16)
             RANDOM.nextBytes(salt)
@@ -39,7 +40,7 @@ class Passwords {
      * @param salt     a 16 bytes salt, ideally obtained with the getNextSalt method
      * @return the hashed password with a pinch of salt
      */
-    fun hash(password: CharArray?, salt: ByteArray?): ByteArray {
+    private fun hash(password: CharArray?, salt: ByteArray?): ByteArray {
         val spec = PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH)
         Arrays.fill(password, Character.MIN_VALUE)
         return try {
@@ -79,7 +80,7 @@ class Passwords {
      * @param length the length of the password
      * @return a random password
      */
-    fun generateRandomPassword(length: Int): String? {
+    fun generateRandomPassword(length: Int): String {
         val sb = StringBuilder(length)
         for (i in 0 until length) {
             val c = RANDOM.nextInt(62)

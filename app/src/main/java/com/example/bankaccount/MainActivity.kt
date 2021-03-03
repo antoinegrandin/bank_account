@@ -2,57 +2,56 @@ package com.example.bankaccount
 
 import android.app.KeyguardManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
-import android.util.Base64
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
-import java.security.SecureRandom
-import java.security.spec.KeySpec
-import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.PBEKeySpec
+import com.google.android.material.internal.ContextUtils.getActivity
+import java.math.BigInteger
+import java.security.MessageDigest
 
 
 class MainActivity : AppCompatActivity() {
 
-    val SHARED_PREFS = "sharedPrefs"
-    val PASSWORD = "password"
-    val SALT = "salt"
-    val ALREADY_CONNECT = "already_connect"
+    private val SHARED_PREFS = "sharedPrefs"
+    private val PASSWORD = "password"
+    private val ALREADY_CONNECT = "already_connect"
 
     private var password: String? = null
-    private var salt: String? = null
     private var already_connect = false
+    private val defaultPassword = "123"
 
     private var cancellationSignal: CancellationSignal? = null
     private val authenticationCallback: BiometricPrompt.AuthenticationCallback
-    get()=
-        @RequiresApi(Build.VERSION_CODES.P)
-        object: BiometricPrompt.AuthenticationCallback(){
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                super.onAuthenticationError(errorCode, errString)
-                if(errorCode == 10){
-                    notifyUser("Authentication cancelled")
-                } else {
-                    notifyUser("Authentication error: $errString")
+        get()=
+            @RequiresApi(Build.VERSION_CODES.P)
+            object: BiometricPrompt.AuthenticationCallback(){
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    if(errorCode == 10){
+                        notifyUser("Authentication cancelled")
+                    } else {
+                        notifyUser("Authentication error: $errString")
+                    }
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    notifyUser("Authentication success!")
+                    startActivity(Intent(this@MainActivity, AccountActivity::class.java))
                 }
             }
-
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                super.onAuthenticationSucceeded(result)
-                notifyUser("Authentication success!")
-                startActivity(Intent(this@MainActivity, AccountActivity::class.java))
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,32 +61,69 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onStart() {
         super.onStart()
+        loadData()
 
         val passwordTextView: TextView = findViewById(R.id.textView_password)
 
         findViewById<Button>(R.id.button_validation_id).setOnClickListener{
-            loadData()
-            if(passwordTextView.text.toString()==password){
-                val accountIntent = Intent(this, AccountActivity::class.java)
-                startActivity(accountIntent)
+            if(already_connect){
+                val sha256Input: ByteArray = passwordTextView.text.toString().toByteArray()
+
+                val sha256Data = BigInteger(1, encryptSha256(sha256Input))
+
+                var sha256Str: String = sha256Data.toString(16)
+
+                if (sha256Str.length < 32) {
+                    sha256Str = "0$sha256Str"
+                }
+
+                if (sha256Str == password) {
+                    passwordTextView.text = ""
+                    val accountIntent = Intent(this, AccountActivity::class.java)
+                    startActivity(accountIntent)
+                } else {
+                    Toast.makeText(this, "Wrong Password", Toast.LENGTH_LONG).show()
+                }
             } else {
-                Toast.makeText(this, "Wrong Password", Toast.LENGTH_LONG).show()
+                if(passwordTextView.text.toString() == password){
+                    passwordTextView.text = ""
+                    val changePinActivity = Intent(this, ChangePinActivity::class.java)
+                    startActivityForResult(changePinActivity, 1)
+                } else {
+                    Toast.makeText(this, "Wrong Password", Toast.LENGTH_LONG).show()
+                }
             }
         }
 
-        checkBiometricSupport()
-
-        startFingerprintPrompt()
+        if(already_connect){
+            checkBiometricSupport()
+        } else {
+            val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+            builder.setTitle("First connection to your bank app")
+            builder.setMessage("Your temporary default password is '123'.")
+            builder.setPositiveButton("OK") { _, _ -> }
+            builder.show()
+        }
 
         findViewById<AppCompatImageView>(R.id.fingerprint_ImageView).setOnClickListener{
-            startFingerprintPrompt()
+            if(already_connect){
+                startFingerprintPrompt()
+            } else {
+                notifyUser("Not at the first connection")
+            }
         }
+    }
+
+    @Throws(java.lang.Exception::class)
+    fun encryptSha256(data: ByteArray): ByteArray? {
+        val sha256: MessageDigest = MessageDigest.getInstance("SHA-256")
+        sha256.update(data)
+        return sha256.digest()
     }
 
     private fun loadData() {
         val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
-        password = sharedPreferences.getString(PASSWORD, "0000")
-        salt = sharedPreferences.getString(SALT, "")
+        password = sharedPreferences.getString(PASSWORD, defaultPassword)
         already_connect = sharedPreferences.getBoolean(ALREADY_CONNECT, false)
     }
 
@@ -121,11 +157,11 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
     private fun startFingerprintPrompt(){
         val biometricPrompt: BiometricPrompt = BiometricPrompt.Builder(this)
-            .setTitle("Authentication is required")
-            .setSubtitle("This app uses fingerprint to keep your data secure")
-            .setNegativeButton("Cancel", this.mainExecutor, { _, _ ->
-                notifyUser("Authentication cancelled")
-            }).build()
+                .setTitle("Authentication is required")
+                .setSubtitle("This app uses fingerprint to keep your data secure")
+                .setNegativeButton("Cancel", this.mainExecutor, { _, _ ->
+                    notifyUser("Authentication cancelled")
+                }).build()
 
         biometricPrompt.authenticate(getCancellationSignal(), mainExecutor, authenticationCallback)
     }
