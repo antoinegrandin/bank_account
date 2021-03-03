@@ -8,6 +8,7 @@
     <string name="label_textView_login_message">Welcome to your Bank Account App !</string>
 
     <string name="label_textView_account_message">Welcome to your List of Account !</string>
+    <string name="refresh_button">Refresh</string>
 
     <string name="label_textView_about_message">Welcome to your Bank Account App - About Section !</string>
     <string name="label_author">Developer : Antoine Grandin</string>

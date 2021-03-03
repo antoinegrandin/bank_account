@@ -3,10 +3,10 @@ package com.example.bankaccount
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
@@ -25,15 +25,28 @@ class AccountActivity : AppCompatActivity() {
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
-        val db = DataBaseHandler(this)
-
         val textViewResult: TextView = findViewById(R.id.text_view_result)
         textViewResult.movementMethod = ScrollingMovementMethod()
 
+        updateAccount(textViewResult)
+
+        findViewById<Button>(R.id.button_refresh).setOnClickListener{
+            updateAccount(textViewResult)
+        }
+    }
+
+    private fun notifyUser(message: String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateAccount(textViewResult: TextView) {
+        textViewResult.text = ""
+        val db = DataBaseHandler(this)
+
         val retrofit = Retrofit.Builder()
-                .baseUrl("https://60102f166c21e10017050128.mockapi.io/labbbank/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            .baseUrl("https://60102f166c21e10017050128.mockapi.io/labbbank/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
         val jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi::class.java)
 
@@ -82,8 +95,9 @@ class AccountActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<Account>>, throwable: Throwable) {
                 val accounts: List<Account> = db.readData()
-                val connectionErrorMessage = "No Connection...Display of the latest available data : \n\n"
-                textViewResult.text = connectionErrorMessage
+                val connectionErrorMessage = "No Connection...Display of the latest available data."
+                notifyUser(connectionErrorMessage)
+                textViewResult.text = ""
                 for (account in accounts) {
                     var content = ""
                     content += """
@@ -111,7 +125,5 @@ class AccountActivity : AppCompatActivity() {
                 }
             }
         })
-
-
     }
 }

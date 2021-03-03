@@ -4,6 +4,7 @@ import android.app.KeyguardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.internal.ContextUtils.getActivity
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -56,6 +58,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        findViewById<FloatingActionButton>(R.id.floatingActionButton_resetData).setOnClickListener{
+            val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+            editor.putString(PASSWORD, "123")
+            editor.putBoolean(ALREADY_CONNECT, false)
+            editor.apply()
+            finish()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.P)

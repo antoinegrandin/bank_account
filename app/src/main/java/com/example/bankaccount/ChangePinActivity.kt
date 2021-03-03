@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class ChangePinActivity : AppCompatActivity() {
@@ -25,21 +27,27 @@ class ChangePinActivity : AppCompatActivity() {
 
         buttonSave.setOnClickListener {
             if(textViewChangePassword.text.toString() == textViewConfirmPassword.text.toString()){
-                val sha256Input: ByteArray = textViewChangePassword.text.toString().toByteArray()
-                val sha256Data = BigInteger(1, encryptSha256(sha256Input))
+                if (isValidPassword(textViewChangePassword.text.toString().trim())) {
+                    val sha256Input: ByteArray = textViewChangePassword.text.toString().toByteArray()
+                    val sha256Data = BigInteger(1, encryptSha256(sha256Input))
 
-                var sha256Str: String = sha256Data.toString(16)
+                    var sha256Str: String = sha256Data.toString(16)
 
-                if (sha256Str.length < 32) {
-                    sha256Str = "0$sha256Str"
+                    if (sha256Str.length < 32) {
+                        sha256Str = "0$sha256Str"
+                    }
+
+                    val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putString(PASSWORD, sha256Str)
+                    editor.putBoolean(ALREADY_CONNECT, true)
+                    editor.apply()
+                    finish()
+                    Toast.makeText(this, "Your password has been correctly updated", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Invalid password (1 lowercase, 1 uppercase, 1 digit and minimum 4 characters)", Toast.LENGTH_SHORT).show()
                 }
 
-                val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
-                val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                editor.putString(PASSWORD, sha256Str)
-                editor.putBoolean(ALREADY_CONNECT, true)
-                editor.apply()
-                finish()
             } else {
                 Toast.makeText(
                     this,
@@ -48,6 +56,13 @@ class ChangePinActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$"
+        val pattern: Pattern = Pattern.compile(passwordPattern)
+        val matcher: Matcher = pattern.matcher(password)
+        return matcher.matches()
     }
 
     @Throws(java.lang.Exception::class)
