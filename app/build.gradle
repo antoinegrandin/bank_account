@@ -9,11 +9,11 @@ android {
 
     defaultConfig {
         applicationId "com.example.bankaccount"
+        android.defaultConfig.vectorDrawables.useSupportLibrary = true
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

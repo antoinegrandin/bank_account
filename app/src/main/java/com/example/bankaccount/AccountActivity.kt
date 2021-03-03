@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,24 +15,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class AccountActivity : AppCompatActivity() {
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.option_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
-            R.id.item_about -> {
-                startActivity(Intent(this, AboutActivity::class.java))
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bankaccount)
+
+        findViewById<FloatingActionButton>(R.id.floatingActionButton).setOnClickListener{
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
 
         val db = DataBaseHandler(this)
 
