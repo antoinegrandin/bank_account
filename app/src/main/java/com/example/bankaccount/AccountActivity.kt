@@ -2,6 +2,7 @@ package com.example.bankaccount
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -27,6 +28,7 @@ class AccountActivity : AppCompatActivity() {
         val db = DataBaseHandler(this)
 
         val textViewResult: TextView = findViewById(R.id.text_view_result)
+        textViewResult.movementMethod = ScrollingMovementMethod()
 
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://60102f166c21e10017050128.mockapi.io/labbbank/")
