@@ -44,7 +44,7 @@ Moreover, as already said before, the application is obfuscated when it is compi
 ### Screenshots of your application
 
 Here is the message displayed to the user when they log in for the first time
-![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/First_Connection.png "First Connection to the App" | width=50)
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/First_Connection.png "First Connection to the App")
 
 
 Here is the application login page :
