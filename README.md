@@ -12,65 +12,34 @@ Hey here is my README file.
 
 ## Exercice
 
-Using Android Studio (or any editor of your choice), you will have to create a mobile application.
-You can choose the language you want between Kotlin and Java.
+### Explain how you ensure user is the right one starting the app
 
-The goal is to create a secure application to see your bank accounts.
+The first time the application is opened, a message box tells the user that his default code is '123'. Of course, in reality, the user would not see this message and would receive this code by email for example. At the first connection, the user cannot use the fingerprint to unlock the application.
 
-### Requirements
+This code, as well as information about whether the user is logging in for the first time, is stored in the shared preferences in private mode.
 
-- This application must be available offline.
-- A refresh button allows the user to update its accounts.
-- Access to the application is restricted
-- Exchanges with API must be secure ( with TLS)
+The user enters the temporary code and is directed to a page where he can change the temporary code to personalize it. Rules (Regex) have been put in place to ensure that the password is complex enough.
+Once the user validates his password, it is hashed with the SHA-256 algorithm and stored in the shared preferences.
 
-### API
+The next time the user logs in, he will have the choice of :
 
-https://6007f1a4309f8b0017ee5022.mockapi.io/api/m1/:endpoint
+- enter his password in the dedicated field (the password will then be hashed and compared with the one stored in the shared preferences).
+- unlock the application with his fingerprint.
 
-```json
-/config/1
-You only have "read" rights on the config enpoint. 
+### How do you securely save user's data on your phone ?
 
-  {
-    "id": "1",
-    "name": "Lesley",
-    "lastname": "Kuhic"
-  }
-```
+As explained above, the user's login data is stored in shared preferences in private mode (so that only the banking application can access this data) and is hashed with the SHA-256 algorithm.
+They are therefore theoretically not recoverable.
 
-```json
-/accounts
-You can read and create new accounts. You cannot modify, nor delete.
+Nevertheless, the client's bank account data, which is stored locally so that the user can access it offline, is stored in a SQLite database whose access is protected by code obfuscation during compilation.
 
-  {
-    "id": "2",
-    "account_name": "Home Loan Account",
-    "amount": "199.04",
-    "iban": "XK753002606900617470",
-    "currency": "RD$"
-  }
-```
+### How did you hide the API url ?
 
-### README.md content
+Using ndk-build, the API url can be protected by including it in a C encoded file which, when compiled, contains only binary numbers i.e. in the form of 0s and 1s. So, even after reverse engineering, you will get 0s and 1s and it is very difficult to identify what is written in the form of 0s and 1s.
 
-- Explain how you ensure user is the right one starting the app
-- How do you securely save user's data on your phone ?
-- How did you hide the API url ?
-- Screenshots of your application
+In the account activity, we just have to go and retrieve the url contained in the file previously created.
 
-### Report scoring
+Moreover, as already said before, the application is obfuscated when it is compiled, which makes it all the more difficult to reverse engineer in order to find the url of the API.
 
-- Your README file contains answers to the asked questions (2pts)
-
-Your APK will be audited in the same way as a classic mobile pentest
-
-- You start with 10pts and you will loose points if:
-  - Your application doesn't respect requirements (-10pts)
-  - Api url is recoverable (-2pts)
-  - Your application can be accessed by any user (-2pts)
-  - Stored data can be recovered (-2pts)
-  - Permissions are too wide (-2pts)
-- The originality of your solution is scored on 3
-- The complexity of your solution is scored on 5
-- UX/UI will not be scored
+### Screenshots of your application
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/About_Dev_Info.jpg "About Developer Information")
