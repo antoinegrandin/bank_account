@@ -44,24 +44,24 @@ Moreover, as already said before, the application is obfuscated when it is compi
 ### Screenshots of your application
 
 Here is the message displayed to the user when they log in for the first time
-![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/First_Connection.jpg "First Connection to the App" | width=50)
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/First_Connection.png "First Connection to the App" | width=50)
 
 
 Here is the application login page :
-![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/HomePage.jpg "Login Page of the app")
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/HomePage.png "Login Page of the app")
 
 
 Here is the page that allows the user to change their password when they log into the application for the first time :
-![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Change_Password.jpg "Changing Password Page")
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Change_Password.png "Changing Password Page")
 
 
 Here is the biometric authentication module :
-![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Biometric_Authent.jpg "Biometric Authentication")
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Biometric_Authent.png "Biometric Authentication")
 
 
 Here is the page that displays the user's bank details :
-![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Account_Data.jpg "Account Data Page")
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Account_Data.png "Account Data Page")
 
 
 Here is the page that displays information about the developer (i.e. about me) :
-![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/About_Dev_Info.jpg "About Developer Information")
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/About_Dev_Info.png "About Developer Information")
