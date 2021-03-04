@@ -6,5 +6,4 @@ class Account {
     var amount: String? = null
     var iban: String? = null
     var currency: String? = null
-
 }
