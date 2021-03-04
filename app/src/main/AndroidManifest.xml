@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bankaccount">
+    package="com.antoinegrandin.bankaccount">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BankAccount">
-        <activity android:name=".ChangePinActivity" />
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".AccountActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.antoinegrandin.bankaccount.ChangePinActivity" />
+        <activity android:name="com.antoinegrandin.bankaccount.AboutActivity" />
+        <activity android:name="com.antoinegrandin.bankaccount.AccountActivity" />
+        <activity android:name="com.antoinegrandin.bankaccount.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

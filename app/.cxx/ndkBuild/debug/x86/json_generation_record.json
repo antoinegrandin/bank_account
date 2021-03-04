@@ -1,0 +1,20 @@
+[
+  {
+    "level": "INFO",
+    "message": "Start JSON generation. Platform version: 19 min SDK version: x86",
+    "file": "D:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Android.mk",
+    "tag": "debug|x86"
+  },
+  {
+    "level": "INFO",
+    "message": "JSON \u0027D:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\.cxx\\ndkBuild\\debug\\x86\\android_gradle_build.json\u0027 was up-to-date",
+    "file": "D:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Android.mk",
+    "tag": "debug|x86"
+  },
+  {
+    "level": "INFO",
+    "message": "JSON generation completed without problems",
+    "file": "D:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Android.mk",
+    "tag": "debug|x86"
+  }
+]

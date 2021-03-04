@@ -1,0 +1,19 @@
+{
+  "buildFiles": [
+    "D:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Android.mk",
+    "D:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Application.mk"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\antoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-19 NDK_OUT\u003dD:/antoi/Desktop/4th_year/projet_android/ProjetAndroid/bank_account/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\build\\intermediates\\ndkBuild\\release\\lib clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\antoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-19 NDK_OUT\u003dD:/antoi/Desktop/4th_year/projet_android/ProjetAndroid/bank_account/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\build\\intermediates\\ndkBuild\\release\\lib {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "api-keys-release-armeabi-v7a": {
+      "artifactName": "api-keys",
+      "buildCommand": "C:\\Users\\antoi\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\src\\main\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-19 NDK_OUT\u003dD:/antoi/Desktop/4th_year/projet_android/ProjetAndroid/bank_account/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dD:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\build\\intermediates\\ndkBuild\\release\\lib D:/antoi/Desktop/4th_year/projet_android/ProjetAndroid/bank_account/app/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libapi-keys.so",
+      "abi": "armeabi-v7a",
+      "output": "D:\\antoi\\Desktop\\4th_year\\projet_android\\ProjetAndroid\\bank_account\\app\\build\\intermediates\\ndkBuild\\release\\obj\\local\\armeabi-v7a\\libapi-keys.so",
+      "runtimeFiles": []
+    }
+  }
+}

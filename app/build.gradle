@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.bankaccount"
+        applicationId "com.antoinegrandin.bankaccount"
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
         minSdkVersion 19
         targetSdkVersion 30
@@ -41,6 +41,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
     }
 }
 
