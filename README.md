@@ -42,4 +42,26 @@ In the account activity, we just have to go and retrieve the url contained in th
 Moreover, as already said before, the application is obfuscated when it is compiled, which makes it all the more difficult to reverse engineer in order to find the url of the API.
 
 ### Screenshots of your application
+
+Here is the message displayed to the user when they log in for the first time
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/First_Connection.jpg "First Connection to the App")
+
+
+Here is the application login page :
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/HomePage.jpg "Login Page of the app")
+
+
+Here is the page that allows the user to change their password when they log into the application for the first time :
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Change_Password.jpg "Changing Password Page")
+
+
+Here is the biometric authentication module :
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Biometric_Authent.jpg "Biometric Authentication")
+
+
+Here is the page that displays the user's bank details :
+![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/Account_Data.jpg "Account Data Page")
+
+
+Here is the page that displays information about the developer (i.e. about me) :
 ![Alt text](https://github.com/antoinegrandin/screenshot_android_project/blob/master/About_Dev_Info.jpg "About Developer Information")
